@@ -1,0 +1,68 @@
+#!/bin/bash
+#
+# rml_move
+#    move Roland Modelas
+#
+# Neil Gershenfeld 7/19/14
+# (c) Massachusetts Institute of Technology 2014
+#
+# This work may be reproduced, modified, distributed,
+# performed, and displayed for any purpose, but must
+# acknowledge the fab modules project. Copyright is
+# retained and must be preserved. The work is provided
+# as is; no warranty is provided, and users accept all 
+# liability.
+#
+
+#
+# check command line
+#
+if [ $# -eq 0 ] || [ $# -gt 4 ]; then
+   echo "command line: rml_move [xy # #|z #|z0|zup|zdown] [machine]"
+   echo "   xy = move to xy position (mm)"
+   echo "   z = move to z position (mm)"
+   echo "   z0 = zero z"
+   echo "   zup = move z up and zero"
+   echo "   zdown = move z down and zero"
+   echo "   machine = machine type"
+   exit
+   fi
+#
+# zero z
+#
+if [ $1 = 'z0' ]; then
+   echo 'need to write zero z'
+   fi
+#
+# move z up and zero
+#
+if [ $1 = 'zup' ]; then
+   echo 'need to write move z up zero'
+   fi
+#
+# move z down and zero
+#
+if [ $1 = 'zdown' ]; then
+   echo 'need to write move z down zero'
+   fi
+#
+# move z
+#
+if [ $1 = 'z' ]; then
+   echo 'need to write move z'
+   fi
+#
+# move xy
+#
+if [ $1 = 'xy' ]; then
+   x=$(echo "(40.0*$2)/1" | bc) # 40/mm
+   y=$(echo "(40.0*$3)/1" | bc)
+   echo "PA;PA;!VZ10;!PZ0,100;PU $x $y;PD $x $y;!MC0;" > rml_move.rml
+   if [ $# -eq 4 ]; then
+      fab_send rml_move.rml $4
+   else
+      fab_send rml_move.rml
+   fi
+   rm rml_move.rml
+   fi
+

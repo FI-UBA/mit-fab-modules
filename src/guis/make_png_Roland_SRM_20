@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+#
+# make_png_Roland_SRM_20
+#    PNG to Roland SRM-20 GUI wrapper
+#
+# Neil Gershenfeld 7/11/14
+# (c) Massachusetts Institute of Technology 2014
+#
+# This work may be reproduced, modified, distributed,
+# performed, and displayed for any purpose, but must
+# acknowledge the fab modules project. Copyright is
+# retained and must be preserved. The work is provided
+# as is; no warranty is provided, and users accept all 
+# liability.
+#
+# imports
+#
+import wx,sys
+from fab_set import fab_frame
+from panel_control import control_panel
+from panel_png import png_panel
+from panel_png_path import png_path_panel
+from panel_path_Roland_SRM_20 import path_Roland_SRM_20_panel
+#
+# command line
+#
+print "command line: make_png_Roland_SRM_20 [input_file [size]]"
+print "   input_file = input .png file (optional)"
+print "   size = image panel size (optional)"
+#
+# start wx
+#
+app = wx.App()
+#
+# add panels to frame
+#
+frame = fab_frame("make_png_Roland_SRM_20",sys.argv)
+frame.control_panel = control_panel(frame)
+frame.sizer.Add(frame.control_panel,(0,0),span=(1,3),flag=wx.ALIGN_CENTER_HORIZONTAL)
+frame.Roland_SRM_20_panel = path_Roland_SRM_20_panel(frame)
+frame.sizer.Add(frame.Roland_SRM_20_panel,(1,2))
+frame.png_path_panel = png_path_panel(frame)
+frame.sizer.Add(frame.png_path_panel,(1,1))
+frame.png_panel = png_panel(frame)
+frame.sizer.Add(frame.png_panel,(1,0))
+#
+# defaults
+#
+frame.set_png_Roland_SRM_20()
+#
+# fit and show frame
+#
+frame.Fit()
+frame.Show()
+#
+# start mainloop
+#
+app.MainLoop()
